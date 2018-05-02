@@ -2,8 +2,9 @@ package pl.coderslab.web;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.stereotype.Service;
 
-
+@Service
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CountryDto {
 
@@ -11,6 +12,9 @@ public class CountryDto {
     long apiCountryId;
     @JsonProperty("country_name")
     String name;
+
+    public CountryDto() {
+    }
 
     public CountryDto(long apiCountryId, String name) {
         this.apiCountryId = apiCountryId;

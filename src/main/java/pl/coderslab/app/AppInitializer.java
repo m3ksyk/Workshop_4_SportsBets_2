@@ -30,6 +30,3 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     }
 }
 
-
-//public class AppInitializer {
-//}

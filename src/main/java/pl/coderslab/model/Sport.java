@@ -2,21 +2,19 @@ package pl.coderslab.model;
 
 import java.util.Set;
 
-public class League {
+public class Sport {
     private long id;
     private String name;
-    private Sport sport;
-    private Country country;
+    private Set<League> leagues;
     private Set<Team> teams;
 
-    public League() {
+    public Sport() {
     }
 
-    public League(long id, String name, Country country, Sport sport, Set<Team> teams) {
+    public Sport(long id, String name, Set<League> leagues, Set<Team> teams) {
         this.id = id;
         this.name = name;
-        this.country = country;
-        this.sport = sport;
+        this.leagues = leagues;
         this.teams = teams;
     }
 
@@ -36,20 +34,12 @@ public class League {
         this.name = name;
     }
 
-    public Country getCountry() {
-        return country;
+    public Set<League> getLeagues() {
+        return leagues;
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-
-    public Sport getSport() {
-        return sport;
-    }
-
-    public void setSport(Sport sport) {
-        this.sport = sport;
+    public void setLeagues(Set<League> leagues) {
+        this.leagues = leagues;
     }
 
     public Set<Team> getTeams() {
