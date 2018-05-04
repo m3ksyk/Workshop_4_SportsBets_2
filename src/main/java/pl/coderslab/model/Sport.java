@@ -11,11 +11,9 @@ public class Sport {
     public Sport() {
     }
 
-    public Sport(long id, String name, Set<League> leagues, Set<Team> teams) {
+    public Sport(long id, String name) {
         this.id = id;
         this.name = name;
-        this.leagues = leagues;
-        this.teams = teams;
     }
 
     public long getId() {

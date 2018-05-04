@@ -99,22 +99,58 @@ public class HelloController {
         return " Got team standings in a league with id:" + league_id;
     }
 
-    @RequestMapping(path= "/get-standings/{from}/{to}/{league_id}")
+    @RequestMapping(path= "/get-events/{from}/{to}/{league_id}")
     public String getGameResultsAction(@PathVariable String from, @PathVariable String to,@PathVariable long league_id){
-        String url="https://apifootball.com/api/?action=get_events&from="+from+"&to="+to+"&league_id=" + league_id +
+        String url="https://apifootball.com/api/?action=get_events&from=" +from+ "&to=" +to+ "&league_id=" +league_id+
                 "&APIkey=eee5028bd4f1a9645f0de3b18aa4c17c11a0eedd815aeaacf2cae4d5801e8969";
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<GameResultDto[]> responseResults = restTemplate.getForEntity(
                 url, GameResultDto[].class);
         GameResultDto[] results = responseResults.getBody();
         for (GameResultDto result: results) {
-            logger.info("teams {}", result);
+            logger.info("results {}", result);
         }
         return " Got game results from league:" + league_id;
     }
-
-//    sportach (piłka nożna, koszykówka, hokej, itd.), - sporty brac z fakera
-
-//    użytkownikach. -userow brac z fakera
+    //maybe do it reusing GameresultDto class?
+    @RequestMapping(path= "/get-last-match/{firstTeam}/{secondTeam}")
+    public String getLastMatchAction(@PathVariable String firstTeam, @PathVariable String secondTeam){
+        String url="https://apifootball.com/api/?action=get_H2H&firstTeam=" +firstTeam+ "&secondTeam=" +secondTeam+
+                "&APIkey=eee5028bd4f1a9645f0de3b18aa4c17c11a0eedd815aeaacf2cae4d5801e8969";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<LastMatchDto[]> responseResults = restTemplate.getForEntity(
+                url, LastMatchDto[].class);
+        LastMatchDto[] results = responseResults.getBody();
+        for (LastMatchDto result: results) {
+            logger.info("result {}", result);
+        }
+        return " Got game results from last match between: " + firstTeam + " and " + secondTeam;
+    }
+    //getting i/o exc , got to check
+    @RequestMapping(path= "/get-sports")
+    public String getSportsAction() {
+        String url = "https://localhost:8080/api/get-sports";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<SportDto[]> responseSports = restTemplate.getForEntity(
+                url, SportDto[].class);
+        SportDto[] sports = responseSports.getBody();
+        for (SportDto sport: sports) {
+            logger.info("sports {}", sport);
+        }
+        return "got sports";
+    }
+    //getting i/o exc , got to check
+    @RequestMapping(path= "/get-users")
+    public String getUsersAction() {
+        String url = "https://localhost:8080/api/get-users";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<UserDto[]> responseUsers = restTemplate.getForEntity(
+                url, UserDto[].class);
+        UserDto[] users = responseUsers.getBody();
+        for (UserDto user: users) {
+            logger.info("users {}", user);
+        }
+        return "got users";
+    }
 
 }
