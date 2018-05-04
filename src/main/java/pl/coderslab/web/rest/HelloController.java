@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import pl.coderslab.dao.*;
 import pl.coderslab.model.GameResult;
+import pl.coderslab.util.DbUtil;
 import pl.coderslab.web.*;
 
 @RestController
@@ -17,12 +19,8 @@ import pl.coderslab.web.*;
 public class HelloController {
     private final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
-    @Autowired
-    CountryDto countryDto;
-    //my football api key
-//    25832600f3ee383b4756c717fabcd0853d8ee85b6715671cfb2a881eb4d4969f
-
-//    https://apifootball.com/api/?action=get_countries&APIkey=eee5028bd4f1a9645f0de3b18aa4c17c11a0eedd815aeaacf2cae4d5801e8969
+//    @Autowired
+//    DbUtil dbUtil;
 
     @GetMapping(path= "/hello-world")
     public String helloWorld() {
@@ -39,6 +37,7 @@ public class HelloController {
         CountryDto[] countries = responseCountries.getBody();
         for (CountryDto country: countries) {
             logger.info("countries {}", country);
+            CountryDao.create(country);
         }
         return "got countries";
     }
@@ -53,6 +52,7 @@ public class HelloController {
         LeagueDto[] leagues = responseLeagues.getBody();
         for (LeagueDto league: leagues) {
             logger.info("leagues {}", league);
+            LeagueDao.create(league);
         }
         return "got leagues";
     }
@@ -67,6 +67,7 @@ public class HelloController {
         LeagueDto[] leagues = responseLeagues.getBody();
         for (LeagueDto league: leagues) {
             logger.info("leagues {}", league);
+            LeagueDao.create(league);
         }
         return "got leagues in country with id: " + country_id;
     }
@@ -81,6 +82,7 @@ public class HelloController {
         TeamDto[] teams = responseTeams.getBody();
         for (TeamDto team: teams) {
             logger.info("teams {}", team);
+            TeamDao.create(team);
         }
         return " Got teams in a league with id:" + league_id;
     }
@@ -95,6 +97,7 @@ public class HelloController {
         StandingsDto[] standings = responseStandings.getBody();
         for (StandingsDto standing: standings) {
             logger.info("teams {}", standing);
+            StandingsDao.create(standing);
         }
         return " Got team standings in a league with id:" + league_id;
     }
@@ -109,20 +112,22 @@ public class HelloController {
         GameResultDto[] results = responseResults.getBody();
         for (GameResultDto result: results) {
             logger.info("results {}", result);
+            GameResultDao.create(result);
         }
         return " Got game results from league:" + league_id;
     }
-    //maybe do it reusing GameresultDto class?
+
     @RequestMapping(path= "/get-last-match/{firstTeam}/{secondTeam}")
     public String getLastMatchAction(@PathVariable String firstTeam, @PathVariable String secondTeam){
         String url="https://apifootball.com/api/?action=get_H2H&firstTeam=" +firstTeam+ "&secondTeam=" +secondTeam+
                 "&APIkey=eee5028bd4f1a9645f0de3b18aa4c17c11a0eedd815aeaacf2cae4d5801e8969";
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<LastMatchDto[]> responseResults = restTemplate.getForEntity(
-                url, LastMatchDto[].class);
-        LastMatchDto[] results = responseResults.getBody();
-        for (LastMatchDto result: results) {
-            logger.info("result {}", result);
+        ResponseEntity<GameResultDto[]> responseResults = restTemplate.getForEntity(
+                url, GameResultDto[].class);
+        GameResultDto[] results = responseResults.getBody();
+        for (GameResultDto result: results) {
+            logger.info("results {}", result);
+            GameResultDao.create(result);
         }
         return " Got game results from last match between: " + firstTeam + " and " + secondTeam;
     }
@@ -136,6 +141,7 @@ public class HelloController {
         SportDto[] sports = responseSports.getBody();
         for (SportDto sport: sports) {
             logger.info("sports {}", sport);
+            SportDao.create(sport);
         }
         return "got sports";
     }
@@ -149,6 +155,7 @@ public class HelloController {
         UserDto[] users = responseUsers.getBody();
         for (UserDto user: users) {
             logger.info("users {}", user);
+            UserDao.create(user);
         }
         return "got users";
     }

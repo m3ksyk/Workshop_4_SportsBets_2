@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TeamDto {
+
     @JsonProperty("team_name")
     String teamName;
 

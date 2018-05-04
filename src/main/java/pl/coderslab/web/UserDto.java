@@ -13,14 +13,17 @@ public class UserDto {
     private String userName;
     @JsonProperty("user_password")
     private String password;
+    @JsonProperty("user_email")
+    private String email;
 
     public UserDto() {
     }
 
-    public UserDto(long id, String userName, String password) {
+    public UserDto(long id, String userName, String password, String email) {
         this.id = id;
         this.userName = userName;
         this.password = password;
+        this.email = email;
     }
 
     public long getId() {
@@ -43,10 +46,25 @@ public class UserDto {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
-        return "UserDto " +
-                "id= " + id +
-                ", userName= " + userName;
+        return "UserDto{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
