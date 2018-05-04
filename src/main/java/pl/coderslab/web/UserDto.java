@@ -1,4 +1,4 @@
 package pl.coderslab.web;
 
-public class GameDto {
+public class UserDto {
 }
