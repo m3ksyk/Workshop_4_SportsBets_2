@@ -19,8 +19,8 @@ import pl.coderslab.web.*;
 public class HelloController {
     private final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
-//    @Autowired
-//    DbUtil dbUtil;
+    @Autowired
+    DbUtil dbUtil;
 
     @GetMapping(path= "/hello-world")
     public String helloWorld() {
@@ -131,7 +131,7 @@ public class HelloController {
         }
         return " Got game results from last match between: " + firstTeam + " and " + secondTeam;
     }
-    //getting i/o exc , got to check
+
     @RequestMapping(path= "/get-sports")
     public String getSportsAction() {
         String url = "https://localhost:8080/api/get-sports";
@@ -145,7 +145,7 @@ public class HelloController {
         }
         return "got sports";
     }
-    //getting i/o exc , got to check
+
     @RequestMapping(path= "/get-users")
     public String getUsersAction() {
         String url = "https://localhost:8080/api/get-users";
